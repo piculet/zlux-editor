@@ -3,28 +3,35 @@
   This program and the accompanying materials are
   made available under the terms of the Eclipse Public License v2.0 which accompanies
   this distribution, and is available at https://www.eclipse.org/legal/epl-v20.html
-  
+
   SPDX-License-Identifier: EPL-2.0
-  
+
   Copyright Contributors to the Zowe Project.
 */
 
-export const TEST_LANGUAGE_MENU = [{name:'TEST_REPLACE',
-                  action: {
-                    functionString:`
+export const TEST_LANGUAGE_MENU = [{
+  name: 'TEST_REPLACE',
+  action: {
+    functionString: `
                     console.log("My context=",context);
-                    context.editor.model.setValue("GOODBYE TEXT");`, params:[]}, keyMap: ''},
-                 {name:'Crop',
-                  action: {
-                    functionString:`
+                    context.editor.model.setValue("GOODBYE TEXT");`, params: []
+  }, keyMap: ''
+},
+{
+  name: 'Crop',
+  action: {
+    functionString: `
                     const selection = context.editor.cursor.getSelection();
                     context.log.info('selection=',selection);
                     if (selection) {
                       context.editor.model.setValue(context.editor.model.getValueInRange(selection));
-                    }`, params:[]}, keyMap: ''},
-                 {name:'Is Dataset?',
-                  action: {
-                    functionString:`
+                    }`, params: []
+  }, keyMap: ''
+},
+{
+  name: 'Is Dataset?',
+  action: {
+    functionString: `
                     const model = context.controller.fetchActiveFile().model;
                     context.log.info('My model=',model);
                     const isDataset = model.isDataset;
@@ -32,8 +39,10 @@ export const TEST_LANGUAGE_MENU = [{name:'TEST_REPLACE',
                     context.controller.snackBar.open(isDataset ? fullName+' is a dataset!'
                                                      : fullName+' is NOT a dataset.', 'Close',
                                                      { duration: 3000, panelClass: 'center' });
-                    `, params:[]}, keyMap: ''}
-                ]
+                    `, params: []
+  }, keyMap: ''
+}
+]
 
 export const LANGUAGE_MENUS = {
   'jcl': [
@@ -49,18 +58,18 @@ export const LANGUAGE_MENUS = {
       `,
       action: {
         /*
-          TODO z/osmf has a jobs api, so this makes use of it for now. 
+          TODO z/osmf has a jobs api, so this makes use of it for now.
           But, we don't import that service into the editor, because it would make a hard requirement instead of an optional one.
           May want to have such metadata in plugindef, or perhaps this is an interface & capability to be searched up
         */
-        functionString:`
+        functionString: `
         const file = context.controller.fetchActiveFile();
         if (file) {
           let content = context.editor.model.getValue();
           if (content && content.length > 0) {
             content = content.replace(/\\n/g,'\\\\n');
             const uri = '/api/v1/jobs/string';
-            const stringJsonBody = '{ "jcl": "'+content+'"}';  
+            const stringJsonBody = '{ "jcl": "'+content+'"}';
             fetch(uri, {method: 'POST', body: stringJsonBody,
                         credentials: 'include',
                         mode: 'cors',
@@ -112,7 +121,7 @@ export const LANGUAGE_MENUS = {
       }
       `,
       action: {
-        functionString:`
+        functionString: `
         const file = context.controller.fetchActiveFile();
         if (file) {
           const dispatcher = ZoweZLUX.dispatcher;
@@ -125,7 +134,7 @@ export const LANGUAGE_MENUS = {
           context.controller.snackBar.open('Cannot find open file', 'Dismiss', {duration: 3000, panelClass: 'center' });
         }
         `,
-        params:[]
+        params: []
       },
       keyMap: ''
     }
@@ -134,77 +143,77 @@ export const LANGUAGE_MENUS = {
 
 
 export const MENU = [
-    {
-        name: 'File',
-        children: [
-            {
-              name: 'New File',
-              action: {
-                internalName: 'createFile'
-              },
-              keyMap: 'Alt+N'
-            },
-            {
-              name: 'group-end'
-            },
-          // {
-          //     name: 'Open Project',
-          //     action: {
-          //       internalName: 'openProject'
-          //     }
-          // },
-            {
-                name: 'Open Directory',
-                action: {
-                    internalName: 'openDirectory'
-                },
-                keyMap: 'Alt+O'
-            },
-            {
-                name: 'Open Datasets',
-                action: {
-                    internalName: 'openDatasets'
-                },
-                keyMap: 'Alt+K'
-            },
-            {
-                name: 'group-end'
-            },
-            {
-                name: 'Save',
-                action: {
-                    internalName: 'saveFile'
-                },
-                keyMap: 'Ctrl+S'
-            },              
-            //{
-            //    name: 'Save All',
-            //    action: {
-            //        internalName: 'saveAll'
-            //    },
-            //    keyMap: '[Ctrl+K S]'
-            //},
-        ],
-    },
-    {
-        name: 'Language Server',
-        children: [
-            {
-                name: 'URL',
-                action: {
-                    internalName: 'languageServerSetting'
-                }
-            }
-        ],
-    }
+  {
+    name: 'File',
+    children: [
+      {
+        name: 'New File',
+        action: {
+          internalName: 'createFile'
+        },
+        keyMap: 'Alt+N'
+      },
+      {
+        name: 'group-end'
+      },
+      // {
+      //     name: 'Open Project',
+      //     action: {
+      //       internalName: 'openProject'
+      //     }
+      // },
+      {
+        name: 'Open Directory',
+        action: {
+          internalName: 'openDirectory'
+        },
+        keyMap: 'Alt+O'
+      },
+      {
+        name: 'Open Datasets',
+        action: {
+          internalName: 'openDatasets'
+        },
+        keyMap: 'Alt+K'
+      },
+      {
+        name: 'group-end'
+      },
+      {
+        name: 'Save',
+        action: {
+          internalName: 'saveFile'
+        },
+        keyMap: 'Ctrl+S'
+      },
+      //{
+      //    name: 'Save All',
+      //    action: {
+      //        internalName: 'saveAll'
+      //    },
+      //    keyMap: '[Ctrl+K S]'
+      //},
+    ],
+  },
+  // {
+  //     name: 'Language Server',
+  //     children: [
+  //         {
+  //             name: 'URL',
+  //             action: {
+  //                 internalName: 'languageServerSetting'
+  //             }
+  //         }
+  //     ],
+  // }
 ];
 
 /*
   This program and the accompanying materials are
   made available under the terms of the Eclipse Public License v2.0 which accompanies
   this distribution, and is available at https://www.eclipse.org/legal/epl-v20.html
-  
+
   SPDX-License-Identifier: EPL-2.0
-  
+
   Copyright Contributors to the Zowe Project.
 */
